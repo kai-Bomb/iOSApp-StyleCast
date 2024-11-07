@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.swift
-//  StyleCast
-//
-//  Created by katsumasa.watanabe on 2024/11/07.
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
