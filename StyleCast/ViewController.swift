@@ -2,6 +2,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    let requester = OpenAPIRequester()
+    
     private let textField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Your question"
@@ -43,7 +45,15 @@ class ViewController: UIViewController {
         guard let text = textField.text, !text.isEmpty else {
             return
         }
-        resultLabel.text = text
+        Task {
+            do {
+                let response = try await requester.postGPT(text)
+                resultLabel.text = response
+            } catch {
+                let error = error as? APIClientError ?? APIClientError.unknown
+                resultLabel.text = error.title
+            }
+        }
     }
     
     private func setup() {
