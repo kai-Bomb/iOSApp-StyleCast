@@ -23,6 +23,7 @@ class ViewController: UIViewController {
         let label = UILabel()
         label.text = ""
         label.textAlignment = .center
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -45,7 +46,7 @@ class ViewController: UIViewController {
         guard let text = textField.text, !text.isEmpty else {
             return
         }
-        Task {
+        Task { @MainActor in
             do {
                 let response = try await requester.postGPT(text)
                 resultLabel.text = response
@@ -68,7 +69,8 @@ class ViewController: UIViewController {
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            textField.widthAnchor.constraint(equalToConstant: 250)
+            textField.widthAnchor.constraint(equalToConstant: 250),
+            resultLabel.widthAnchor.constraint(equalToConstant: 300)
         ])
         
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
