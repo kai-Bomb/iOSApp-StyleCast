@@ -1,4 +1,5 @@
 import UIKit
+import Combine
 
 class UserInfoInputViewController: UIViewController {
 
@@ -63,13 +64,15 @@ class UserInfoInputViewController: UIViewController {
         return button
     }()
 
-    private var selectedGender: Gender?
+    private var viewModel = UserInfoInputViewModel()
+    private var cancellables: Set<AnyCancellable> = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupLayout()
         setupActions()
+        bind()
     }
 
     private func setupLayout() {
@@ -157,26 +160,40 @@ class UserInfoInputViewController: UIViewController {
         registerButton.addTarget(self, action: #selector(register), for: .touchUpInside)
     }
 
+    private func bind() {
+        usernameTextField.textPublisher
+            .assign(to: \UserInfoInputViewModel.username, on: viewModel)
+            .store(in: &cancellables)
+
+        ageTextField.textPublisher
+            .assign(to: \UserInfoInputViewModel.age, on: viewModel)
+            .store(in: &cancellables)
+    }
+
     @objc private func selectMale() {
-        selectedGender = .male
-        maleButton.layer.borderColor = UIColor.systemBlue.cgColor
+        viewModel.selectedGender = .male
+        maleButton.layer.borderColor = UIColor.black.cgColor
         femaleButton.layer.borderColor = UIColor.clear.cgColor
     }
 
     @objc private func selectFemale() {
-        selectedGender = .female
+        viewModel.selectedGender = .female
         maleButton.layer.borderColor = UIColor.clear.cgColor
-        femaleButton.layer.borderColor = UIColor.systemRed.cgColor
+        femaleButton.layer.borderColor = UIColor.black.cgColor
     }
 
     @objc private func register() {
-        let username = usernameTextField.text ?? ""
-        let age = ageTextField.text ?? ""
-        let gender = selectedGender
+        viewModel.register()
+    }
+}
 
-        print("ユーザー名: \(username)")
-        print("年齢: \(age)")
-        print("性別: \(gender?.value ?? "未選択")")
+private extension UITextField {
+    var textPublisher: AnyPublisher<String, Never> {
+        NotificationCenter.default.publisher(
+            for: UITextField.textDidChangeNotification, object: self
+        )
+            .compactMap { ($0.object as? UITextField)?.text }
+            .eraseToAnyPublisher()
     }
 }
 
