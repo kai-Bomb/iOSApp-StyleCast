@@ -33,7 +33,7 @@
 		CEBD18BC2CDCBA5F008B5F2C /* Exceptions for "StyleCast" folder in "StyleCast" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Resource/Info.plist,
+				Resources/Info.plist,
 			);
 			target = CEBD18932CDCBA57008B5F2C /* StyleCast */;
 		};
