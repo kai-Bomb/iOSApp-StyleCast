@@ -155,9 +155,18 @@ class UserInfoInputViewController: UIViewController {
     }
 
     private func setupActions() {
-        maleButton.addTarget(self, action: #selector(selectMale), for: .touchUpInside)
-        femaleButton.addTarget(self, action: #selector(selectFemale), for: .touchUpInside)
-        registerButton.addTarget(self, action: #selector(register), for: .touchUpInside)
+        maleButton.addAction(.init { [weak self] _ in
+            guard let self else { return }
+            self.selectMale()
+        }, for: .touchUpInside)
+        femaleButton.addAction(.init { [weak self] _ in
+            guard let self else { return }
+            self.selectFemale()
+        }, for: .touchUpInside)
+        registerButton.addAction(.init { [weak self] _ in
+            guard let self else { return }
+            self.register()
+        }, for: .touchUpInside)
     }
 
     private func bind() {
