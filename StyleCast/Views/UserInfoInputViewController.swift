@@ -64,7 +64,7 @@ class UserInfoInputViewController: UIViewController {
         return button
     }()
 
-    private var viewModel = UserInfoInputViewModel()
+    private let viewModel = UserInfoInputViewModel()
     private var cancellables: Set<AnyCancellable> = []
 
     override func viewDidLoad() {
