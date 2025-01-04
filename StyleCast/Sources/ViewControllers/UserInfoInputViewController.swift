@@ -152,6 +152,9 @@ class UserInfoInputViewController: UIViewController {
             ),
             registerButton.heightAnchor.constraint(equalToConstant: 48)
         ])
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
 
     private func setupActions() {
@@ -193,6 +196,11 @@ class UserInfoInputViewController: UIViewController {
 
     @objc private func register() {
         viewModel.register()
+    }
+
+    // キーボードを閉じる
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 

@@ -31,8 +31,8 @@ struct OpenAPIRequester {
         )
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("Bearer \(APIKey.openAiApiKey)", forHTTPHeaderField: "Authorization")
-        request.addValue("\(APIKey.organizasionId)", forHTTPHeaderField: "OpenAI-Organization")
+//        request.addValue("Bearer \(APIKey.openAiApiKey)", forHTTPHeaderField: "Authorization")
+//        request.addValue("\(APIKey.organizasionId)", forHTTPHeaderField: "OpenAI-Organization")
         request.httpBody = try JSONEncoder().encode(
             RequestBody(
                 model: "gpt-3.5-turbo",
