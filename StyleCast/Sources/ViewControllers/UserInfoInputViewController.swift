@@ -153,7 +153,7 @@ class UserInfoInputViewController: UIViewController {
             registerButton.heightAnchor.constraint(equalToConstant: 48)
         ])
 
-        var tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
     }
 
